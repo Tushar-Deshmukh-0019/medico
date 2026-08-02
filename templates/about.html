@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+
+{% block nav_about %}active{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="about-section">
+        <h1>About This System</h1>
+        
+        <div class="about-content">
+            <div class="about-card">
+                <h2>What is Fuzzy Logic?</h2>
+                <p>
+                    Fuzzy logic is a mathematical approach that handles the concept of partial truth. Unlike classical binary logic 
+                    where a value must be true (1) or false (0), fuzzy logic allows for values between 0 and 1, representing degrees 
+                    of membership in a set.
+                </p>
+                <p>
+                    In medical decision support, this is particularly useful because clinical parameters don't have sharp boundaries. 
+                    For example, a blood sugar level of 125 mg/dL is not simply "high" or "not high" - it has characteristics of both 
+                    slightly elevated and high ranges.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h2>How Our System Works</h2>
+                <ol>
+                    <li>
+                        <strong>Fuzzification:</strong> Convert crisp input values (blood sugar, BMI, etc.) into fuzzy membership values
+                    </li>
+                    <li>
+                        <strong>Rule Evaluation:</strong> Apply 25+ fuzzy rules based on medical knowledge to evaluate the inputs
+                    </li>
+                    <li>
+                        <strong>Aggregation:</strong> Combine the results of all rules
+                    </li>
+                    <li>
+                        <strong>Defuzzification:</strong> Convert the fuzzy output back into a crisp risk score (0-100%)
+                    </li>
+                    <li>
+                        <strong>Decision Support:</strong> Generate clinical recommendations based on the risk category
+                    </li>
+                </ol>
+            </div>
+
+            <div class="about-card">
+                <h2>Input Parameters</h2>
+                <div class="parameter-grid">
+                    <div class="parameter-item">
+                        <h3><i class="fas fa-droplet"></i> Blood Sugar</h3>
+                        <p><strong>Range:</strong> 0-600 mg/dL</p>
+                        <p><strong>Significance:</strong> High blood sugar is a primary indicator of diabetes risk</p>
+                        <p><strong>Normal Fasting:</strong> 70-100 mg/dL</p>
+                    </div>
+                    <div class="parameter-item">
+                        <h3><i class="fas fa-weight"></i> Body Mass Index</h3>
+                        <p><strong>Range:</strong> 10-60 kg/m²</p>
+                        <p><strong>Calculation:</strong> Weight (kg) / Height (m)²</p>
+                        <p><strong>Normal Range:</strong> 18.5-24.9 kg/m²</p>
+                    </div>
+                    <div class="parameter-item">
+                        <h3><i class="fas fa-birthday-cake"></i> Age</h3>
+                        <p><strong>Range:</strong> 0-120 years</p>
+                        <p><strong>Significance:</strong> Age is an important risk factor for diabetes</p>
+                        <p><strong>Risk Increases:</strong> Over 40 years</p>
+                    </div>
+                    <div class="parameter-item">
+                        <h3><i class="fas fa-heart"></i> Blood Pressure</h3>
+                        <p><strong>Range:</strong> 40-250 mmHg</p>
+                        <p><strong>Measured:</strong> Systolic pressure (top number)</p>
+                        <p><strong>Normal:</strong> Less than 120 mmHg</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <h2>Risk Categories</h2>
+                <div class="risk-categories">
+                    <div class="risk-category low">
+                        <h3><i class="fas fa-check-circle"></i> Low Risk (0-30%)</h3>
+                        <p>Indicates a low probability of developing diabetes in the near future. Continue current lifestyle habits and maintain regular health check-ups.</p>
+                    </div>
+                    <div class="risk-category medium">
+                        <h3><i class="fas fa-exclamation-circle"></i> Medium Risk (30-60%)</h3>
+                        <p>Indicates moderate risk. Consultation with a healthcare provider is recommended for further evaluation and preventive measures.</p>
+                    </div>
+                    <div class="risk-category high">
+                        <h3><i class="fas fa-times-circle"></i> High Risk (60-100%)</h3>
+                        <p>Indicates significant risk. Immediate medical consultation is recommended for comprehensive evaluation and treatment planning.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <h2>Fuzzy Rules</h2>
+                <p>Our system uses 25 fuzzy rules to evaluate diabetes risk. These rules are based on medical literature and expert knowledge:</p>
+                <div class="rules-examples">
+                    <div class="rule-example">
+                        <p><strong>Rule:</strong> IF Blood Sugar is Normal AND BMI is Normal AND Age is Young THEN Risk is Low</p>
+                        <p><strong>Logic:</strong> Young patients with normal parameters have low diabetes risk</p>
+                    </div>
+                    <div class="rule-example">
+                        <p><strong>Rule:</strong> IF Blood Sugar is High AND BMI is Obese THEN Risk is High</p>
+                        <p><strong>Logic:</strong> High blood sugar combined with obesity significantly increases risk</p>
+                    </div>
+                    <div class="rule-example">
+                        <p><strong>Rule:</strong> IF Blood Sugar is Very High THEN Risk is High</p>
+                        <p><strong>Logic:</strong> Very high blood sugar alone indicates significant risk</p>
+                    </div>
+                    <div class="rule-example">
+                        <p><strong>Rule:</strong> IF Blood Sugar is Slightly High AND Age is Old AND BP is High THEN Risk is Medium</p>
+                        <p><strong>Logic:</strong> Multiple elevated factors in older patients indicate medium risk</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <h2>Membership Functions</h2>
+                <p>We use triangular membership functions to represent fuzzy sets for each input variable:</p>
+                <ul>
+                    <li><strong>Blood Sugar:</strong> Normal, Slightly High, High, Very High</li>
+                    <li><strong>BMI:</strong> Underweight, Normal, Overweight, Obese</li>
+                    <li><strong>Age:</strong> Young, Middle-aged, Old</li>
+                    <li><strong>Blood Pressure:</strong> Normal, Elevated, High</li>
+                </ul>
+                <p>Each membership function has a smooth, gradual transition between categories, allowing for nuanced representation of clinical parameters.</p>
+            </div>
+
+            <div class="about-card">
+                <h2>Important Disclaimer</h2>
+                <div class="disclaimer-box">
+                    <p>
+                        <strong>⚠️ IMPORTANT:</strong> This system is developed for educational purposes only and is based on fuzzy logic principles. 
+                        It should NOT be used as a substitute for professional medical diagnosis, treatment, or advice.
+                    </p>
+                    <p>
+                        Always consult with qualified healthcare professionals before making any medical decisions based on these results. 
+                        The results from this system should only be used as a supplementary tool for learning about fuzzy logic in medical 
+                        decision support systems.
+                    </p>
+                    <p>
+                        This system has not been validated against real patient data and is not approved by any medical regulatory body.
+                    </p>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <h2>Technical Stack</h2>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <h4>Backend</h4>
+                        <ul>
+                            <li>Python</li>
+                            <li>Flask Web Framework</li>
+                            <li>Fuzzy Logic Engine (Custom)</li>
+                            <li>NumPy for numerical operations</li>
+                        </ul>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Frontend</h4>
+                        <ul>
+                            <li>HTML5</li>
+                            <li>CSS3 with Animations</li>
+                            <li>Vanilla JavaScript</li>
+                            <li>Responsive Design</li>
+                        </ul>
+                    </div>
+                    <div class="tech-item">
+                        <h4>Architecture</h4>
+                        <ul>
+                            <li>Mamdani Fuzzy Inference</li>
+                            <li>Triangular Membership Functions</li>
+                            <li>Centroid Defuzzification</li>
+                            <li>RESTful API</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <h2>References</h2>
+                <ul>
+                    <li>Mamdani, E.H., & Assilian, S. (1975). An experiment in linguistic synthesis with a fuzzy logic controller.</li>
+                    <li>Zadeh, L.A. (1965). Fuzzy sets. Information and Control, 8(3), 338-353.</li>
+                    <li>American Diabetes Association Standards of Medical Care in Diabetes</li>
+                    <li>WHO Guidelines on Diabetes Risk Assessment</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    .about-section {
+        padding: 40px 0;
+    }
+
+    .about-content {
+        display: grid;
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .about-card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: slideUp 0.6s ease-out;
+    }
+
+    .about-card h2 {
+        text-align: left;
+        margin-bottom: 20px;
+        color: #667eea;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 10px;
+    }
+
+    .about-card p {
+        margin-bottom: 15px;
+        line-height: 1.8;
+        color: #555;
+    }
+
+    .about-card ol {
+        margin-left: 20px;
+        line-height: 2;
+    }
+
+    .about-card ol li {
+        margin-bottom: 10px;
+    }
+
+    .parameter-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .parameter-item {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+    }
+
+    .parameter-item h3 {
+        color: #667eea;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .parameter-item p {
+        margin: 8px 0;
+        font-size: 0.95em;
+    }
+
+    .risk-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .risk-category {
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid;
+        color: white;
+    }
+
+    .risk-category.low {
+        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        border-color: #2e7d32;
+    }
+
+    .risk-category.medium {
+        background: linear-gradient(135deg, #FFC107 0%, #ffb300 100%);
+        border-color: #ff8f00;
+        color: #333;
+    }
+
+    .risk-category.high {
+        background: linear-gradient(135deg, #F44336 0%, #da190b 100%);
+        border-color: #c41c3b;
+    }
+
+    .risk-category h3 {
+        margin-bottom: 10px;
+        color: inherit;
+    }
+
+    .risk-category p {
+        margin: 0;
+        font-size: 0.95em;
+    }
+
+    .rules-examples {
+        display: grid;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .rule-example {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        border-left: 4px solid #667eea;
+    }
+
+    .rule-example p {
+        margin: 8px 0;
+    }
+
+    .rule-example p:first-child {
+        font-weight: 600;
+        color: #667eea;
+    }
+
+    .disclaimer-box {
+        background: #fff3cd;
+        border: 2px solid #ffc107;
+        border-radius: 8px;
+        padding: 20px;
+        color: #856404;
+    }
+
+    .tech-stack {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .tech-item {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+        border-top: 4px solid #667eea;
+    }
+
+    .tech-item h4 {
+        color: #667eea;
+        margin-bottom: 15px;
+    }
+
+    .tech-item ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .tech-item li {
+        padding: 8px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .tech-item li:last-child {
+        border-bottom: none;
+    }
+
+    .tech-item li:before {
+        content: "▸ ";
+        color: #667eea;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+</style>
+{% endblock %}
