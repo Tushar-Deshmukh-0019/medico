@@ -1,0 +1,331 @@
+================================================================================
+                    MEDICAL CDSS DATABASE STRUCTURE
+                          Visual Overview
+================================================================================
+
+Your database has 3 related tables:
+
+================================================================================
+                           TABLE STRUCTURE
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           PATIENTS TABLE                                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Column Name      │ Data Type        │ Null? │ Description                │
+│  ──────────────────────────────────────────────────────────────────────────│
+│  id *             │ INTEGER          │  NO   │ Primary Key (auto-inc)     │
+│  name             │ VARCHAR(120)     │  NO   │ Patient's full name        │
+│  age              │ INTEGER          │ YES   │ Patient's age in years     │
+│  email            │ VARCHAR(120)     │ YES   │ Patient's email address    │
+│  phone            │ VARCHAR(20)      │ YES   │ Patient's phone number     │
+│  created_at       │ TIMESTAMP        │  NO   │ Record created date/time   │
+│  updated_at       │ TIMESTAMP        │  NO   │ Last update date/time      │
+│                                                                              │
+│  Example Row:                                                                │
+│  ┌──┬────────────┬─────┬──────────────────┬──────────────┬──────────────┐  │
+│  │1 │ John Smith │ 45  │ john@example.com │ 555-1234567  │ 2024-08-02   │  │
+│  └──┴────────────┴─────┴──────────────────┴──────────────┴──────────────┘  │
+│                                                                              │
+│  Storage: Stores information about each patient                            │
+│  Relation: One patient → Many assessments (1:N)                            │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        ASSESSMENTS TABLE                                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Column Name         │ Data Type    │ Null? │ Description                 │
+│  ──────────────────────────────────────────────────────────────────────────│
+│  id *                │ INTEGER      │  NO   │ Primary Key (auto-inc)      │
+│  patient_id **       │ INTEGER      │  NO   │ Foreign Key → patients.id   │
+│  blood_sugar         │ FLOAT        │  NO   │ Blood sugar (mg/dL)         │
+│  bmi                 │ FLOAT        │  NO   │ Body Mass Index (kg/m²)     │
+│  age                 │ INTEGER      │  NO   │ Age in years                │
+│  blood_pressure      │ FLOAT        │  NO   │ Blood pressure (mmHg)       │
+│  risk_score          │ FLOAT        │  NO   │ Diabetes risk (0-100%)      │
+│  risk_category       │ VARCHAR(50)  │ YES   │ Risk level (Low/Med/High)   │
+│  blood_sugar_status  │ VARCHAR(50)  │ YES   │ Blood sugar status          │
+│  bmi_category        │ VARCHAR(50)  │ YES   │ BMI classification          │
+│  bp_category         │ VARCHAR(50)  │ YES   │ Blood pressure status       │
+│  recommendations     │ TEXT         │ YES   │ Health recommendations      │
+│  created_at          │ TIMESTAMP    │  NO   │ Record created date/time    │
+│  updated_at          │ TIMESTAMP    │  NO   │ Last update date/time       │
+│                                                                              │
+│  Example Row:                                                                │
+│  ┌──┬───────────┬─────┬────┬───┬──┬───────┬──────┬──────┬──┬──┬────────────┐ │
+│  │1 │ 1 (→John) │ 150 │ 28 │45 │130│ 72.5 │ High │ High │...│...│ Consult... │ │
+│  └──┴───────────┴─────┴────┴───┴──┴───────┴──────┴──────┴──┴──┴────────────┘ │
+│                                                                              │
+│  Storage: Stores assessment results for each patient                      │
+│  Relation: Many assessments → One patient                                 │
+│  Note: patient_id links to patients table                                  │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           USERS TABLE                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Column Name      │ Data Type        │ Null? │ Description                │
+│  ──────────────────────────────────────────────────────────────────────────│
+│  id *             │ INTEGER          │  NO   │ Primary Key (auto-inc)     │
+│  username         │ VARCHAR(120)     │  NO   │ Login username (unique)    │
+│  email            │ VARCHAR(120)     │  NO   │ Email address (unique)     │
+│  password_hash    │ VARCHAR(255)     │  NO   │ Hashed password            │
+│  created_at       │ TIMESTAMP        │  NO   │ Account created date/time  │
+│  updated_at       │ TIMESTAMP        │  NO   │ Last update date/time      │
+│                                                                              │
+│  Example Row:                                                                │
+│  ┌──┬──────────┬──────────────────┬─────────────────┬──────────────┐       │
+│  │1 │ admin    │ admin@example.com│ $2b$12$hash...  │ 2024-08-02   │       │
+│  └──┴──────────┴──────────────────┴─────────────────┴──────────────┘       │
+│                                                                              │
+│  Storage: Stores user account information                                  │
+│  Relation: Independent table (can expand for auth)                         │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+                         TABLE RELATIONSHIPS
+================================================================================
+
+                            RELATIONSHIP DIAGRAM
+
+┌──────────────────────┐                    ┌──────────────────────────┐
+│   PATIENTS TABLE     │                    │  ASSESSMENTS TABLE       │
+├──────────────────────┤                    ├──────────────────────────┤
+│                      │                    │                          │
+│ ★ id (PK)            │◄───Foreign Key──┐  │ ★ id (PK)               │
+│   name               │                 │  │ ★ patient_id (FK)───────┤
+│   age                │                 └──┤   blood_sugar           │
+│   email              │                    │   bmi                   │
+│   phone              │                    │   age                   │
+│   created_at         │                    │   blood_pressure        │
+│   updated_at         │                    │   risk_score            │
+│                      │                    │   risk_category         │
+│  (1 Patient)         │                    │   recommendations       │
+│  (Many Assessments)  │                    │   created_at            │
+│                      │                    │   updated_at            │
+└──────────────────────┘                    │  (Many Assessments)     │
+                                             │  (One Patient)          │
+       ↑                                      │                        │
+       │                                      └──────────────────────────┘
+       │
+    1:N Relationship
+    (One patient has many assessments)
+
+Explanation:
+  • patients.id is the primary key
+  • assessments.patient_id is a foreign key pointing to patients.id
+  • This creates a relationship: One patient → Many assessments
+  • When viewing assessment, you can see which patient it belongs to
+
+================================================================================
+                      DATA FLOW VISUALIZATION
+================================================================================
+
+                          USER FLOW → DATABASE
+
+    ┌─────────────┐
+    │   Browser   │
+    │ (Flask App) │
+    └──────┬──────┘
+           │ User fills assessment form
+           ▼
+    ┌─────────────────┐
+    │  Flask App      │
+    │  (app.py)       │
+    └────────┬────────┘
+             │ Fuzzy logic calculates risk score
+             ▼
+    ┌──────────────────────┐
+    │  Database Insert     │
+    │                      │
+    │  INSERT INTO patients...
+    │  INSERT INTO assessments...
+    └────────┬─────────────┘
+             │
+             ▼
+    ┌──────────────────────┐
+    │  PostgreSQL          │
+    │                      │
+    │  ✓ New patient row   │
+    │  ✓ New assessment    │
+    │  ✓ Links via PK/FK   │
+    └──────────────────────┘
+
+
+What gets stored:
+
+Step 1: Create Patient
+  INSERT INTO patients (name, age, email, phone) 
+  VALUES ('John Smith', 45, 'john@email.com', '555-1234');
+  → Generates patient.id = 1
+
+Step 2: Create Assessment
+  INSERT INTO assessments (patient_id, blood_sugar, bmi, age, bp, risk_score...)
+  VALUES (1, 150, 28, 45, 130, 72.5, 'High'...);
+  → Links to patient with id=1
+
+Step 3: View in pgAdmin
+  → See patient record
+  → See assessment record
+  → See they're linked via patient_id
+
+================================================================================
+                          EXAMPLE QUERIES
+================================================================================
+
+To explore your data in pgAdmin Query Tool:
+
+1. See all patients:
+   ┌─────────────────────────────────┐
+   │ SELECT * FROM patients;         │
+   └─────────────────────────────────┘
+
+2. See all assessments:
+   ┌─────────────────────────────────┐
+   │ SELECT * FROM assessments;      │
+   └─────────────────────────────────┘
+
+3. Count total patients:
+   ┌─────────────────────────────────┐
+   │ SELECT COUNT(*) FROM patients;  │
+   └─────────────────────────────────┘
+
+4. Average risk score:
+   ┌──────────────────────────────────────┐
+   │ SELECT AVG(risk_score)               │
+   │ FROM assessments;                    │
+   └──────────────────────────────────────┘
+
+5. High-risk patients (> 70%):
+   ┌──────────────────────────────────────┐
+   │ SELECT * FROM assessments            │
+   │ WHERE risk_score > 70;               │
+   └──────────────────────────────────────┘
+
+6. Patient with their assessments:
+   ┌────────────────────────────────────────────┐
+   │ SELECT p.name, a.risk_score,               │
+   │        a.created_at                        │
+   │ FROM patients p                            │
+   │ JOIN assessments a ON p.id = a.patient_id; │
+   └────────────────────────────────────────────┘
+
+================================================================================
+                          NAVIGATING pgAdmin
+================================================================================
+
+Left Sidebar Hierarchy:
+
+  📁 Servers
+     └─ 📌 localhost (or your server name)
+        └─ 📁 Databases
+           ├─ 📁 postgres (system)
+           ├─ 📁 medical_cdss ← YOUR DATABASE
+           │  └─ 📁 Schemas
+           │     └─ 📁 public
+           │        ├─ 📊 Tables
+           │        │  ├─ 📋 patients ← Click to view
+           │        │  ├─ 📋 assessments ← Click to view
+           │        │  └─ 📋 users ← Click to view
+           │        ├─ 🔑 Indexes
+           │        └─ 🔗 Foreign Keys
+
+Right-click options:
+  • Properties → View table structure
+  • View/Edit Data → See table data
+  • Backup/Restore → Database backups
+  • Query Tool → Write SQL queries
+
+================================================================================
+                    IN PGADMIN: WHAT TO LOOK FOR
+================================================================================
+
+When you open pgAdmin and navigate to medical_cdss:
+
+✓ You should see 3 tables:
+   1. assessments
+   2. patients
+   3. users
+
+✓ Each table should have columns listed
+
+✓ When you run your Flask app:
+   - New rows appear in patients table
+   - New rows appear in assessments table
+   - Risk scores appear in risk_score column
+
+✓ Data types should match:
+   - id = INTEGER with auto-increment
+   - blood_sugar = FLOAT
+   - risk_score = FLOAT
+   - risk_category = VARCHAR
+
+✓ You should see relationships:
+   - assessments.patient_id → patients.id
+   - This is the Foreign Key
+
+================================================================================
+                           DATA EXAMPLES
+================================================================================
+
+What your PATIENTS table might look like:
+
+┌────┬──────────────┬─────┬──────────────────┬──────────────┐
+│ id │ name         │ age │ email            │ phone        │
+├────┼──────────────┼─────┼──────────────────┼──────────────┤
+│ 1  │ John Smith   │ 45  │ john@example.com │ 555-0001     │
+│ 2  │ Jane Doe     │ 35  │ jane@example.com │ 555-0002     │
+│ 3  │ Bob Johnson  │ 52  │ bob@example.com  │ 555-0003     │
+└────┴──────────────┴─────┴──────────────────┴──────────────┘
+
+
+What your ASSESSMENTS table might look like:
+
+┌────┬────────────┬──────────┬─────┬────┬──┬───────┬──────────┐
+│ id │ patient_id │ blood_sq │ bmi │age │bp│risk_% │category  │
+├────┼────────────┼──────────┼─────┼────┼──┼───────┼──────────┤
+│ 1  │ 1 (John)   │ 150      │ 28  │45  │130│ 72.5 │ High     │
+│ 2  │ 2 (Jane)   │ 95       │ 23  │35  │120│ 18.3 │ Low      │
+│ 3  │ 1 (John)   │ 160      │ 29  │45  │135│ 78.2 │ High     │
+│ 4  │ 3 (Bob)    │ 180      │ 32  │52  │145│ 85.1 │ High     │
+└────┴────────────┴──────────┴─────┴────┴──┴───────┴──────────┘
+
+Notice:
+  • patient_id = 1 (John) has 2 assessments
+  • Each assessment is a separate row
+  • risk_score shows the diabetes risk percentage
+
+================================================================================
+                          QUICK CHECKLIST
+================================================================================
+
+After setting up pgAdmin, verify:
+
+□ pgAdmin opens at http://localhost:5050
+□ Can connect to localhost PostgreSQL
+□ Database "medical_cdss" is visible
+□ Can expand medical_cdss database
+□ Can see 3 tables:
+   □ patients
+   □ assessments
+   □ users
+□ Can view Properties of each table
+□ Can see column names and data types
+□ Can view data (View/Edit Data → All Rows)
+□ Can run SQL queries in Query Tool
+□ Can see relationships (Foreign Keys)
+
+Everything checked? You're ready to use pgAdmin! ✅
+
+================================================================================
+
+That's your database structure! 🗄️
+

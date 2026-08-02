@@ -1,0 +1,253 @@
+================================================================================
+                  RENDER ENVIRONMENT VARIABLES - VISUAL GUIDE
+                      How to set DATABASE_URL correctly
+================================================================================
+
+THE PROBLEM:
+  Your app on Render is trying to connect to localhost:5432
+  But localhost doesn't exist on Render's servers!
+  
+  Solution: Set DATABASE_URL environment variable to Render's PostgreSQL
+
+================================================================================
+                        WHERE TO SET VARIABLES
+================================================================================
+
+1. Go to: https://render.com/dashboard
+2. Find your Web Service: medical-cdss
+3. Click on it
+4. Go to: Settings tab (right side)
+5. Scroll down to: Environment (section)
+6. Click: "Add Environment Variable"
+
+================================================================================
+                    WHAT TO ADD (EXACT FORMAT)
+================================================================================
+
+Variable 1: DATABASE_URL
+─────────────────────────
+
+Key:   DATABASE_URL
+
+Value: postgresql://postgres:XXXXXXXXXXXXX@dpg-xxxxx.oregon-postgres.render.com:5432/medical_cdss
+
+Where XXXXXXXXXXXXX is your actual password from PostgreSQL database!
+
+
+Variable 2: FLASK_ENV
+─────────────────────
+
+Key:   FLASK_ENV
+
+Value: production
+
+
+Variable 3: FLASK_DEBUG
+────────────────────────
+
+Key:   FLASK_DEBUG
+
+Value: False
+
+================================================================================
+                        HOW TO GET CONNECTION STRING
+================================================================================
+
+1. Go to: https://render.com/dashboard
+2. Click: PostgreSQL database (e.g., medical-cdss-db)
+3. Look for: "Connections"
+4. Copy: "PostgreSQL Connection String"
+   
+   It looks like:
+   postgresql://postgres:abc123@dpg-xxxxx.oregon-postgres.render.com:5432/medical_cdss
+
+5. Paste this in DATABASE_URL environment variable
+
+================================================================================
+                          STEP-BY-STEP GUIDE
+================================================================================
+
+STEP 1: Get Connection String
+┌─────────────────────────────────────────┐
+│ Render Dashboard                        │
+│ └─ PostgreSQL (medical-cdss-db)         │
+│    └─ Connections                       │
+│       └─ Copy PostgreSQL Connection ... │
+│          postgresql://postgres:****@... │
+└─────────────────────────────────────────┘
+       ↓ (SAVE THIS!)
+       
+STEP 2: Go to Web Service Settings
+┌─────────────────────────────────────────┐
+│ Render Dashboard                        │
+│ └─ Web Service (medical-cdss)           │
+│    └─ Settings tab                      │
+│       └─ Environment section            │
+│          └─ Add Environment Variable    │
+└─────────────────────────────────────────┘
+
+STEP 3: Add DATABASE_URL
+┌─────────────────────────────────────────┐
+│ Key:   DATABASE_URL                     │
+│ Value: postgresql://postgres:****@...   │ (from STEP 1)
+│                                         │
+│ [Add Variable] ← Click this            │
+└─────────────────────────────────────────┘
+
+STEP 4: Add FLASK_ENV
+┌─────────────────────────────────────────┐
+│ Key:   FLASK_ENV                        │
+│ Value: production                       │
+│                                         │
+│ [Add Variable] ← Click this            │
+└─────────────────────────────────────────┘
+
+STEP 5: Add FLASK_DEBUG
+┌─────────────────────────────────────────┐
+│ Key:   FLASK_DEBUG                      │
+│ Value: False                            │
+│                                         │
+│ [Add Variable] ← Click this            │
+└─────────────────────────────────────────┘
+
+STEP 6: Redeploy
+┌─────────────────────────────────────────┐
+│ Web Service → Redeploy button           │
+│ Or: git push origin main                │
+│                                         │
+│ Wait 5-10 minutes...                   │
+└─────────────────────────────────────────┘
+
+STEP 7: Check Logs
+┌─────────────────────────────────────────┐
+│ Logs should show:                       │
+│ ✓ Worker ready                          │
+│ ✓ Listening at: http://0.0.0.0:8080     │
+│ ✓ Database connection established      │
+└─────────────────────────────────────────┘
+
+STEP 8: Test App
+┌─────────────────────────────────────────┐
+│ Visit: https://medical-cdss.onrender.com│
+│ ✓ Should load homepage                  │
+│ ✓ Assessment form should work           │
+│ ✓ Data should save                      │
+└─────────────────────────────────────────┘
+
+================================================================================
+                      ENVIRONMENT VARIABLES SECTION
+================================================================================
+
+After adding variables, your Environment section should look like:
+
+┌──────────────────────────────────────────────┐
+│ Environment Variables                        │
+├──────────────────────────────────────────────┤
+│                                              │
+│ DATABASE_URL                                 │
+│ postgresql://postgres:xxxxx@...             │
+│ [Edit] [Remove]                             │
+│                                              │
+│ FLASK_ENV                                    │
+│ production                                   │
+│ [Edit] [Remove]                             │
+│                                              │
+│ FLASK_DEBUG                                  │
+│ False                                        │
+│ [Edit] [Remove]                             │
+│                                              │
+│ [Add Environment Variable] ← For more vars │
+│                                              │
+└──────────────────────────────────────────────┘
+
+================================================================================
+                       VERIFY BEFORE REDEPLOYING
+================================================================================
+
+Checklist:
+
+[ ] DATABASE_URL set (not empty, has full connection string)
+[ ] DATABASE_URL has password (not blank)
+[ ] DATABASE_URL starts with "postgresql://"
+[ ] FLASK_ENV = production
+[ ] FLASK_DEBUG = False
+[ ] All three variables visible in Environment section
+[ ] Ready to Redeploy!
+
+================================================================================
+                    WHAT HAPPENS AFTER YOU DEPLOY
+================================================================================
+
+Timeline:
+
+T=0min     Redeploy starts
+           ↓
+T=1min     Building Docker image
+           ↓
+T=2min     Installing dependencies (pip install -r requirements.txt)
+           ↓
+T=3min     Starting web server (gunicorn)
+           ↓
+T=5min     Connecting to PostgreSQL database
+           ↓
+T=6min     Creating tables (if needed)
+           ↓
+T=7min     ✓ Worker ready - APP IS LIVE!
+           ↓
+           Your app accessible at:
+           https://medical-cdss.onrender.com
+
+================================================================================
+                      ERROR MESSAGES & SOLUTIONS
+================================================================================
+
+Error: "No DATABASE_URL environment variable found"
+→ DATABASE_URL not set in Environment section
+→ Solution: Add it now following steps above
+
+Error: "connection to server at localhost failed"
+→ App trying to use localhost instead of Render PostgreSQL
+→ Solution: Make sure DATABASE_URL is set correctly
+
+Error: "password authentication failed"
+→ Wrong password in CONNECTION string
+→ Solution: Copy exact connection string from PostgreSQL service
+
+Error: "Worker failed to boot"
+→ Something wrong with app startup
+→ Solution: Check logs for specific error, fix locally first
+
+================================================================================
+                        QUICK REFERENCE
+================================================================================
+
+DATABASE_URL Format:
+postgresql://username:password@hostname:port/database
+
+Example:
+postgresql://postgres:abc123@dpg-xxxxx.oregon-postgres.render.com:5432/medical_cdss
+
+Key Points:
+  - Start with: postgresql://
+  - Username: postgres
+  - Password: From your PostgreSQL service
+  - Hostname: From your PostgreSQL service (NOT localhost!)
+  - Port: 5432
+  - Database: medical_cdss
+
+================================================================================
+                      YOU'RE ALMOST THERE!
+================================================================================
+
+Just 3 environment variables and your app will work:
+
+1. DATABASE_URL = [your PostgreSQL connection string]
+2. FLASK_ENV = production
+3. FLASK_DEBUG = False
+
+Add these now, redeploy, and your app will be live! 🚀
+
+================================================================================
+
+See: RENDER_FIX_NOW.md for more details
+

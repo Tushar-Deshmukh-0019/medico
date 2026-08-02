@@ -1,0 +1,125 @@
+================================================================================
+                     QUICK POSTGRESQL SETUP
+           Your credentials are already configured!
+================================================================================
+
+YOUR CREDENTIALS:
+  Username ......... postgres
+  Password ......... admin123
+  Database ........ medical_cdss
+  Host ............ localhost
+  Port ............ 5432
+
+================================================================================
+
+STEP 1: CREATE THE DATABASE (1 minute)
+
+1. Open Command Prompt
+2. Run:
+   psql -U postgres -h localhost
+
+3. When prompted for password, enter: admin123
+
+4. You'll see: postgres=#
+
+5. Copy-paste this command:
+   CREATE DATABASE medical_cdss;
+
+6. You should see: CREATE DATABASE
+
+7. Exit:
+   \q
+
+Done! Database created.
+
+================================================================================
+
+STEP 2: START THE APP
+
+1. Open Command Prompt
+2. Navigate to project:
+   cd c:\medical_cdss
+
+3. Run:
+   python app.py
+
+4. You should see:
+   ✓ Database initialized successfully
+   * Running on http://127.0.0.1:5000
+
+Done! App running.
+
+================================================================================
+
+STEP 3: OPEN IN BROWSER
+
+Visit: http://localhost:5000
+
+You'll see the Medical CDSS home page!
+
+================================================================================
+
+WHAT'S CONFIGURED:
+
+✅ database/connection.py
+   Default URL: postgresql://postgres:admin123@localhost:5432/medical_cdss
+
+✅ .env file
+   DATABASE_URL: postgresql://postgres:admin123@localhost:5432/medical_cdss
+
+✅ setup_postgres.bat
+   Ready to use your credentials
+
+✅ setup_postgres.ps1
+   Ready to use your credentials
+
+✅ All documentation
+   Updated with your actual connection details
+
+================================================================================
+
+READY FOR PRODUCTION:
+
+When deploying to Heroku/AWS:
+  1. Create database on cloud platform
+  2. Get connection string from cloud provider
+  3. Set DATABASE_URL environment variable
+  4. Deploy and enjoy!
+
+Connection string format is same everywhere:
+  postgresql://username:password@host:port/database
+
+================================================================================
+
+TROUBLESHOOTING:
+
+Problem: "FATAL: database does not exist"
+→ You haven't created the database yet (Step 1)
+
+Problem: "Connection refused"
+→ PostgreSQL is not running, start it from Windows Services
+
+Problem: "Password authentication failed"
+→ Check your PostgreSQL password (should be: admin123)
+
+Problem: Can't find psql command
+→ Add PostgreSQL to PATH:
+   "C:\Program Files\PostgreSQL\15\bin\psql" -U postgres
+
+================================================================================
+
+YOUR FILES:
+
+Main config:  database/connection.py
+Env file:     .env
+Setup script: setup_postgres.bat
+
+================================================================================
+
+READY TO GO!
+
+Create database → Run app → Visit http://localhost:5000
+
+All your credentials are pre-configured. Go! 🚀
+
+================================================================================
