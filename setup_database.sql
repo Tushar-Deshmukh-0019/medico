@@ -56,7 +56,7 @@ CREATE INDEX idx_assessments_created_at ON assessments(created_at);
 CREATE INDEX idx_patients_created_at ON patients(created_at);
 
 -- Create the medical_cdss user with limited privileges
-CREATE USER cdss_user WITH PASSWORD 'Password123!';
+-- Create the application user separately with a strong, deployment-managed password.
 
 -- Grant privileges on database
 GRANT CONNECT ON DATABASE medical_cdss TO cdss_user;
@@ -80,7 +80,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO cd
 \echo '================================'
 \echo 'Database: medical_cdss'
 \echo 'User: cdss_user'
-\echo 'Password: Password123!'
+\echo 'Password: configured by the operator'
 \echo ''
 \echo 'Tables created:'
 \echo '  - users'

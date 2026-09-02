@@ -8,7 +8,7 @@
 
 ```
 ⚠️ No DATABASE_URL environment variable found.
-Using local PostgreSQL: postgresql://postgres:admin123@localhost:5432/medical_cdss
+Use your local PostgreSQL connection through the `DATABASE_URL` environment variable.
 ```
 
 **This means:** The environment variable is NOT set on Render yet!
@@ -218,4 +218,3 @@ Set it now and your app will work! 🎉
 Go to: https://render.com/dashboard → Settings → Add DATABASE_URL
 
 Your app will be live in 10 minutes! 🚀
-

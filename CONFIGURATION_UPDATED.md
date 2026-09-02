@@ -1,17 +1,17 @@
-# ✅ Configuration Updated with Your Credentials
+# Configuration Setup
 
 **Date:** August 2, 2026  
-**Status:** Configuration complete with your PostgreSQL credentials
+**Status:** Configure the database through deployment environment variables
 
 ---
 
 ## 📝 What Was Updated
 
-All configuration files have been updated with your actual PostgreSQL credentials:
+Configure these values locally or in the deployment environment. Do not commit credentials:
 
 ```
 Username: postgres
-Password: admin123
+Password: `<your-password>`
 Host: localhost
 Port: 5432
 Database: medical_cdss
@@ -23,17 +23,14 @@ Database: medical_cdss
 
 ### Core Configuration
 ✅ **`database/connection.py`**
-- Updated default database URL to your PostgreSQL credentials
-- Will use: `postgresql://postgres:admin123@localhost:5432/medical_cdss`
+- Uses the `DATABASE_URL` environment variable
 
 ### Setup Scripts
 ✅ **`setup_postgres.bat`** (Windows CMD)
-- Updated with your DATABASE_URL
-- Sets environment variable automatically
+- Requires `DATABASE_URL` to be set before running
 
 ✅ **`setup_postgres.ps1`** (PowerShell)
-- Updated with your DATABASE_URL
-- Sets environment variable automatically
+- Requires `DATABASE_URL` to be set before running
 
 ### Documentation
 ✅ **`SETUP_START_HERE.md`**
@@ -43,9 +40,8 @@ Database: medical_cdss
 - Updated with your credentials in all examples
 
 ### Environment File
-✅ **`.env`** (NEW FILE)
-- Created with your actual DATABASE_URL
-- Ready to use
+✅ **`.env`** (local-only)
+- Set `DATABASE_URL` locally; never commit this file
 
 ### Setup Instructions
 ✅ **`POSTGRESQL_SETUP_NOW.md`** (NEW FILE)
@@ -87,25 +83,22 @@ Visit: **http://localhost:5000**
 
 ---
 
-## 🔐 Your Connection Details (All Set)
+## Database Connection
 
 **Database Connection:**
 ```
-postgresql://postgres:admin123@localhost:5432/medical_cdss
+postgresql://postgres:<your-password>@localhost:5432/medical_cdss
 ```
 
 **Components:**
 - Protocol: `postgresql://`
 - Username: `postgres`
-- Password: `admin123`
+- Password: `<your-password>`
 - Host: `localhost`
 - Port: `5432`
 - Database: `medical_cdss`
 
-This configuration is now embedded in:
-- `database/connection.py` (default)
-- `.env` (environment variables)
-- All setup scripts
+Set this value through `DATABASE_URL`; it is not embedded in the repository.
 
 ---
 

@@ -45,7 +45,7 @@ After installation, pgAdmin opens at:
    - **Port:** `5432`
    - **Maintenance database:** `postgres`
    - **Username:** `postgres`
-   - **Password:** `admin123`
+    - **Password:** your configured PostgreSQL password
    - **Check: Save password?** ✓ Yes
 6. **Click "Save"**
 
@@ -59,7 +59,7 @@ If connection doesn't work automatically:
    Host:     localhost
    Port:     5432
    User:     postgres
-   Password: admin123
+    Password: your configured PostgreSQL password
    Database: medical_cdss
    ```
 3. **Test Connection** button → Should say "connected"
@@ -351,7 +351,7 @@ If you forgot the master password:
 **Solution:**
 1. Check if PostgreSQL is running
 2. Windows Services → postgresql-x64-15 → Start
-3. Verify credentials: postgres / admin123
+3. Verify the credentials configured for your environment
 4. Try different hostname: localhost or 127.0.0.1
 
 ### Problem: Database Not Showing
@@ -485,4 +485,3 @@ All checked? You're ready to use pgAdmin! 🎉
 ---
 
 **Happy database exploring! 🐘🗄️**
-

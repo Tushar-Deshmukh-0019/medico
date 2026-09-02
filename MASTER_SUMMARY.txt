@@ -182,7 +182,7 @@ DOCUMENTATION:
 PostgreSQL Setup:
   Database Name ............. medical_cdss
   Username .................. cdss_user
-  Password .................. Password123!
+  Password .................. <your-password>
   Host ...................... localhost
   Port ...................... 5432
   Connection Pooling ........ 10 connections

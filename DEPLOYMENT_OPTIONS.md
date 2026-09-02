@@ -78,7 +78,7 @@ Start command:     gunicorn app:app
 ### Step 4: Add Environment Variables
 Click "Advanced" → "Add Environment Variable"
 ```
-DATABASE_URL = postgresql://postgres:admin123@localhost:5432/medical_cdss
+DATABASE_URL = <your managed PostgreSQL connection string>
 FLASK_ENV = production
 ```
 
@@ -360,4 +360,3 @@ Just let me know which one you prefer:
 - [ ] Oracle Cloud
 
 I'll create a step-by-step guide!
-

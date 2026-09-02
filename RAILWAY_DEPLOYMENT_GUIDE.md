@@ -100,7 +100,7 @@ Specifies Python version for Railway.
 
 Your `.env` file has:
 ```
-DATABASE_URL=postgresql://postgres:admin123@localhost:5432/medical_cdss
+DATABASE_URL=<your managed PostgreSQL connection string>
 FLASK_ENV=development
 ```
 
@@ -596,4 +596,3 @@ Follow these steps and your Medical CDSS will be live on Railway in minutes!
 ---
 
 **Happy deployment! 🚂🌍**
-

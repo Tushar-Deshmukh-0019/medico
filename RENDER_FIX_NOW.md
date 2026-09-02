@@ -10,7 +10,7 @@ App is trying to connect to `localhost:5432` on Render (which doesn't exist):
 
 ```
 ⚠️ No DATABASE_URL environment variable found.
-Using local PostgreSQL: postgresql://postgres:admin123@localhost:5432/medical_cdss
+Use the deployment-provided PostgreSQL connection string through `DATABASE_URL`.
 ```
 
 **This ONLY works on your local machine, not on Render!**
@@ -53,7 +53,7 @@ Value: [PASTE YOUR CONNECTION STRING FROM STEP 1]
 
 **Example value (replace with yours):**
 ```
-postgresql://postgres:abc123def456@dpg-abc123.oregon-postgres.render.com:5432/medical_cdss
+postgresql://postgres:<your-password>@<render-endpoint>:5432/medical_cdss
 ```
 
 ⚠️ **Make sure you copy the ENTIRE connection string, including the password!**
@@ -253,4 +253,3 @@ Then visit: **https://medical-cdss.onrender.com**
 Without it, the app tries to use localhost PostgreSQL (which doesn't exist on Render).
 
 Set it now and your app will work! 🚀
-

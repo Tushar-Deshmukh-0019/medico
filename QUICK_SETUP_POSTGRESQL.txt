@@ -5,7 +5,7 @@
 
 YOUR CREDENTIALS:
   Username ......... postgres
-  Password ......... admin123
+  Password ......... <your-password>
   Database ........ medical_cdss
   Host ............ localhost
   Port ............ 5432
@@ -18,7 +18,7 @@ STEP 1: CREATE THE DATABASE (1 minute)
 2. Run:
    psql -U postgres -h localhost
 
-3. When prompted for password, enter: admin123
+3. When prompted, enter the password you configured for PostgreSQL.
 
 4. You'll see: postgres=#
 
@@ -62,10 +62,10 @@ You'll see the Medical CDSS home page!
 WHAT'S CONFIGURED:
 
 ✅ database/connection.py
-   Default URL: postgresql://postgres:admin123@localhost:5432/medical_cdss
+   Default URL: postgresql://postgres:<your-password>@localhost:5432/medical_cdss
 
 ✅ .env file
-   DATABASE_URL: postgresql://postgres:admin123@localhost:5432/medical_cdss
+   DATABASE_URL: <your PostgreSQL connection string>
 
 ✅ setup_postgres.bat
    Ready to use your credentials
@@ -100,7 +100,7 @@ Problem: "Connection refused"
 → PostgreSQL is not running, start it from Windows Services
 
 Problem: "Password authentication failed"
-→ Check your PostgreSQL password (should be: admin123)
+→ Check your PostgreSQL password configuration
 
 Problem: Can't find psql command
 → Add PostgreSQL to PATH:

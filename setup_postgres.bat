@@ -31,11 +31,14 @@ echo [OK] PostgreSQL found!
 psql --version
 echo.
 
-REM Set environment variable
+REM Set environment variable from the operator's existing configuration.
 echo [STEP 1] Setting DATABASE_URL environment variable...
-setx DATABASE_URL "postgresql://postgres:admin123@localhost:5432/medical_cdss"
+if "%DATABASE_URL%"=="" (
+    echo [ERROR] Set DATABASE_URL before running this script.
+    exit /b 1
+)
+setx DATABASE_URL "%DATABASE_URL%"
 echo [OK] DATABASE_URL set!
-set DATABASE_URL=postgresql://postgres:admin123@localhost:5432/medical_cdss
 echo.
 
 REM Get PostgreSQL superuser password
@@ -114,7 +117,7 @@ echo.
 echo Database Details:
 echo   Database: medical_cdss
 echo   Username: cdss_user
-echo   Password: Password123!
+echo   Password: configured by the operator
 echo   Host: localhost
 echo   Port: 5432
 echo.

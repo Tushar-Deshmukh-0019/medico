@@ -31,9 +31,12 @@ Write-Host ""
 
 # Step 1: Set environment variable
 Write-Host "[STEP 1] Setting DATABASE_URL environment variable..." -ForegroundColor Cyan
-$dbUrl = "postgresql://postgres:admin123@localhost:5432/medical_cdss"
+if ([string]::IsNullOrWhiteSpace($env:DATABASE_URL)) {
+    Write-Host "[ERROR] Set DATABASE_URL before running this script." -ForegroundColor Red
+    exit 1
+}
+$dbUrl = $env:DATABASE_URL
 [Environment]::SetEnvironmentVariable("DATABASE_URL", $dbUrl, "User")
-$env:DATABASE_URL = $dbUrl
 Write-Host "[OK] DATABASE_URL set!" -ForegroundColor Green
 Write-Host ""
 
@@ -76,7 +79,6 @@ Write-Host ""
 Write-Host "[STEP 4] Testing database connection..." -ForegroundColor Cyan
 Write-Host ""
 
-$env:PGPASSWORD = "Password123!"
 $testOutput = & psql -U cdss_user -d medical_cdss -h localhost -c "SELECT version();" 2>&1
 $testExitCode = $LASTEXITCODE
 Remove-Item env:PGPASSWORD
@@ -130,7 +132,7 @@ Write-Host ""
 Write-Host "Database Details:" -ForegroundColor Cyan
 Write-Host "  Database:  medical_cdss" -ForegroundColor White
 Write-Host "  Username:  cdss_user" -ForegroundColor White
-Write-Host "  Password:  Password123!" -ForegroundColor White
+Write-Host "  Password:  configured by the operator" -ForegroundColor White
 Write-Host "  Host:      localhost" -ForegroundColor White
 Write-Host "  Port:      5432" -ForegroundColor White
 Write-Host ""
