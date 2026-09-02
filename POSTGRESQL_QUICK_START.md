@@ -30,7 +30,7 @@ brew install postgresql
 psql -U postgres
 
 CREATE DATABASE medical_cdss;
-CREATE USER cdss_user WITH PASSWORD 'Password123!';
+CREATE USER cdss_user WITH PASSWORD '<choose-a-strong-password>';
 GRANT ALL PRIVILEGES ON DATABASE medical_cdss TO cdss_user;
 
 \q
@@ -40,12 +40,12 @@ GRANT ALL PRIVILEGES ON DATABASE medical_cdss TO cdss_user;
 
 **Windows CMD:**
 ```bash
-set DATABASE_URL=postgresql://cdss_user:Password123!@localhost:5432/medical_cdss
+set DATABASE_URL=<your PostgreSQL connection string>
 ```
 
 **Windows PowerShell:**
 ```powershell
-$env:DATABASE_URL = "postgresql://cdss_user:Password123!@localhost:5432/medical_cdss"
+$env:DATABASE_URL = "<your PostgreSQL connection string>"
 ```
 
 ### Step 4: Run App (1.5 min)
@@ -86,7 +86,7 @@ SELECT * FROM assessments;
 postgresql://username:password@host:port/database
 
 Example:
-postgresql://cdss_user:Password123!@localhost:5432/medical_cdss
+postgresql://cdss_user:<your-password>@localhost:5432/medical_cdss
 ```
 
 ---
@@ -98,7 +98,7 @@ Host: localhost
 Port: 5432
 Database: medical_cdss
 Username: cdss_user
-Password: Password123! (change this!)
+Password: <your-password>
 ```
 
 ---

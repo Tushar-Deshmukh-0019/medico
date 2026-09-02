@@ -96,7 +96,7 @@ psql -U postgres
 CREATE DATABASE medical_cdss;
 
 # Create user
-CREATE USER cdss_user WITH PASSWORD 'YourSecurePassword123!';
+CREATE USER cdss_user WITH PASSWORD '<choose-a-strong-password>';
 
 # Grant privileges
 ALTER ROLE cdss_user SET client_encoding TO 'utf8';
@@ -133,24 +133,24 @@ sudo -u postgres psql
 
 **Windows Command Prompt:**
 ```bash
-set DATABASE_URL=postgresql://cdss_user:YourSecurePassword123!@localhost:5432/medical_cdss
+set DATABASE_URL=<your PostgreSQL connection string>
 ```
 
 **Windows PowerShell:**
 ```powershell
-$env:DATABASE_URL = "postgresql://cdss_user:YourSecurePassword123!@localhost:5432/medical_cdss"
+$env:DATABASE_URL = "<your PostgreSQL connection string>"
 ```
 
 **Linux/Mac:**
 ```bash
-export DATABASE_URL="postgresql://cdss_user:YourSecurePassword123!@localhost:5432/medical_cdss"
+export DATABASE_URL="<your PostgreSQL connection string>"
 ```
 
 ### .env File (Better Practice)
 
 Create file: `c:\medical_cdss\.env`
 ```
-DATABASE_URL=postgresql://cdss_user:YourSecurePassword123!@localhost:5432/medical_cdss
+DATABASE_URL=<your PostgreSQL connection string>
 FLASK_ENV=development
 FLASK_DEBUG=True
 SECRET_KEY=your-secret-key-here
@@ -388,7 +388,7 @@ psql -h localhost -U cdss_user -d medical_cdss
 # Reset password
 psql -U postgres
 
-ALTER USER cdss_user WITH PASSWORD 'NewPassword123!';
+ALTER USER cdss_user WITH PASSWORD '<new-strong-password>';
 
 \q
 
@@ -414,7 +414,7 @@ CREATE DATABASE medical_cdss;
 ```bash
 psql -U postgres
 
-CREATE USER cdss_user WITH PASSWORD 'YourPassword123!';
+CREATE USER cdss_user WITH PASSWORD '<choose-a-strong-password>';
 
 GRANT ALL PRIVILEGES ON DATABASE medical_cdss TO cdss_user;
 
@@ -457,7 +457,7 @@ psql -h localhost -U cdss_user -d medical_cdss
 psql -U postgres
 
 CREATE DATABASE medical_cdss;
-CREATE USER cdss_user WITH PASSWORD 'MySecurePass123!';
+CREATE USER cdss_user WITH PASSWORD '<choose-a-strong-password>';
 GRANT ALL PRIVILEGES ON DATABASE medical_cdss TO cdss_user;
 
 \q
@@ -468,7 +468,7 @@ GRANT ALL PRIVILEGES ON DATABASE medical_cdss TO cdss_user;
 cd c:\medical_cdss
 
 # Create .env file
-echo DATABASE_URL=postgresql://cdss_user:MySecurePass123!@localhost:5432/medical_cdss > .env
+echo DATABASE_URL=<your PostgreSQL connection string> > .env
 ```
 
 **4. Install Dependencies**
@@ -502,7 +502,7 @@ SELECT * FROM assessments;
 ```bash
 # Don't use: password, 123456, postgres
 # Use: Mix of uppercase, lowercase, numbers, special characters
-# Example: MySecurePass123!@#
+# Example: use a unique strong password stored outside the repository
 
 # Character requirements:
 # - Minimum 12 characters

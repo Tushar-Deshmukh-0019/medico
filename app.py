@@ -140,8 +140,8 @@ def create_app(config_name='development'):
             
             return jsonify(generate_json_response('success', data=result)), 200
         
-        except Exception as e:
-            return jsonify(generate_json_response('error', error=str(e))), 500
+        except Exception:
+            return jsonify(generate_json_response('error', error='Internal server error')), 500
     
     @app.route('/api/system-info', methods=['GET'])
     def api_system_info():
@@ -176,8 +176,8 @@ def create_app(config_name='development'):
                 }
             )), 200
         
-        except Exception as e:
-            return jsonify(generate_json_response('error', error=str(e))), 500
+        except Exception:
+            return jsonify(generate_json_response('error', error='Internal server error')), 500
     
     @app.route('/api/health', methods=['GET'])
     def api_health():

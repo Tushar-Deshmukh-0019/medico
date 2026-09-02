@@ -41,7 +41,7 @@ In pgAdmin:
    Host:     localhost
    Port:     5432
    User:     postgres
-   Password: admin123
+   Password: <your-password>
    
 4. Click "Save"
 
@@ -221,7 +221,7 @@ If you see all this, everything is working! ✅
 Problem: Can't connect to database
 → PostgreSQL not running
 → Start: Windows Services → postgresql-x64-15 → Start
-→ Check credentials: postgres / admin123
+→ Check the PostgreSQL credentials configured for your environment
 
 Problem: No tables showing
 → Run Flask app first: python app.py
@@ -318,4 +318,3 @@ Enjoy managing your Medical CDSS database! 🐘🗄️
 ================================================================================
 
 For detailed guide, see: PGADMIN_GUIDE.md
-

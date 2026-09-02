@@ -242,23 +242,25 @@
             const div = document.createElement('div');
             div.className = 'history-item';
 
-            const riskClass = assessment.risk_category || 'low';
+            const riskClass = ['low', 'medium', 'high'].includes(assessment.risk_category)
+                ? assessment.risk_category
+                : 'low';
 
             div.innerHTML = `
                 <div class="history-item-content">
-                    <div class="history-item-name">${assessment.patient_name}</div>
-                    <div class="history-item-date">${assessment.date}</div>
+                    <div class="history-item-name"></div>
+                    <div class="history-item-date"></div>
                     <div class="history-item-data">
-                        <div class="data-point"><strong>Blood Sugar:</strong> ${assessment.blood_sugar} mg/dL</div>
-                        <div class="data-point"><strong>BMI:</strong> ${assessment.bmi} kg/m²</div>
-                        <div class="data-point"><strong>Age:</strong> ${assessment.age} years</div>
-                        <div class="data-point"><strong>BP:</strong> ${assessment.bp} mmHg</div>
+                        <div class="data-point"><strong>Blood Sugar:</strong> <span class="blood-sugar"></span> mg/dL</div>
+                        <div class="data-point"><strong>BMI:</strong> <span class="bmi"></span> kg/m²</div>
+                        <div class="data-point"><strong>Age:</strong> <span class="age"></span> years</div>
+                        <div class="data-point"><strong>BP:</strong> <span class="bp"></span> mmHg</div>
                     </div>
                 </div>
                 <div class="history-item-risk">
                     <div class="risk-badge ${riskClass}">
-                        <div class="risk-percentage">${assessment.risk_score}%</div>
-                        <div class="risk-label">${assessment.risk_label}</div>
+                        <div class="risk-percentage"></div>
+                        <div class="risk-label"></div>
                     </div>
                     <div class="history-actions">
                         <button class="btn btn-secondary btn-small" onclick="historyManager.viewDetails(${index})">View</button>
@@ -266,6 +268,15 @@
                     </div>
                 </div>
             `;
+
+            div.querySelector('.history-item-name').textContent = assessment.patient_name || '';
+            div.querySelector('.history-item-date').textContent = assessment.date || '';
+            div.querySelector('.blood-sugar').textContent = assessment.blood_sugar ?? '';
+            div.querySelector('.bmi').textContent = assessment.bmi ?? '';
+            div.querySelector('.age').textContent = assessment.age ?? '';
+            div.querySelector('.bp').textContent = assessment.bp ?? '';
+            div.querySelector('.risk-percentage').textContent = `${assessment.risk_score ?? ''}%`;
+            div.querySelector('.risk-label').textContent = assessment.risk_label || '';
 
             return div;
         }

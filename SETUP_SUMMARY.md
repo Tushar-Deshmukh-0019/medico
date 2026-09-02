@@ -160,7 +160,7 @@ Host:       localhost
 Port:       5432
 Database:   medical_cdss
 Username:   cdss_user
-Password:   Password123!
+Password:   <your-password>
 ```
 
 ### After Setup

@@ -172,7 +172,7 @@ aws rds create-db-instance \
   --db-instance-class db.t3.micro \
   --engine mysql \
   --master-username admin \
-  --master-user-password YourPassword123
+  --master-user-password '<set-in-secret-manager>'
 ```
 
 ### Step 7: Deploy & Monitor
@@ -269,7 +269,7 @@ az mysql flexible-server create \
   --resource-group medical-cdss-rg \
   --name medical-cdss-db \
   --admin-user adminuser \
-  --admin-password YourPassword123
+  --admin-password '<set-in-secret-manager>'
 
 # Get connection string
 az mysql flexible-server show \

@@ -67,7 +67,7 @@ Then copy-paste these commands:
 
 ```sql
 CREATE DATABASE medical_cdss;
-CREATE USER cdss_user WITH PASSWORD 'Password123!';
+CREATE USER cdss_user WITH PASSWORD '<choose-a-strong-password>';
 GRANT ALL PRIVILEGES ON DATABASE medical_cdss TO cdss_user;
 GRANT ALL PRIVILEGES ON SCHEMA public TO cdss_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO cdss_user;
@@ -79,12 +79,12 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO c
 
 **Command Prompt:**
 ```cmd
-setx DATABASE_URL "postgresql://postgres:admin123@localhost:5432/medical_cdss"
+setx DATABASE_URL "<your PostgreSQL connection string>"
 ```
 
 **PowerShell:**
 ```powershell
-[Environment]::SetEnvironmentVariable("DATABASE_URL", "postgresql://postgres:admin123@localhost:5432/medical_cdss", "User")
+[Environment]::SetEnvironmentVariable("DATABASE_URL", "<your PostgreSQL connection string>", "User")
 ```
 
 ⚠️ **Restart Command Prompt after setting**
@@ -156,12 +156,12 @@ Host:       localhost
 Port:       5432
 Database:   medical_cdss
 Username:   cdss_user
-Password:   Password123!
+Password:   <your-password>
 ```
 
 **Connection String:**
 ```
-postgresql://cdss_user:Password123!@localhost:5432/medical_cdss
+postgresql://cdss_user:<your-password>@localhost:5432/medical_cdss
 ```
 
 ---

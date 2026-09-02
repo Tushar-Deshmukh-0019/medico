@@ -100,7 +100,7 @@ eb open
 # 5. Storage: 20GB
 # 6. DB instance identifier: medical-cdss-db
 # 7. Master username: admin
-# 8. Master password: YourSecurePassword123!
+# 8. Master password: choose a strong secret in the AWS console
 
 # Or via CLI:
 aws rds create-db-instance \
@@ -109,7 +109,7 @@ aws rds create-db-instance \
   --engine mysql \
   --allocated-storage 20 \
   --master-username admin \
-  --master-user-password YourSecurePassword123
+  --master-user-password '<set-in-secret-manager>'
 ```
 
 ### Step 2: Get Connection String
@@ -118,13 +118,13 @@ aws rds create-db-instance \
 # Format: medical-cdss-db.c123456.us-east-1.rds.amazonaws.com
 
 # Connection string:
-mysql+pymysql://admin:YourSecurePassword123@medical-cdss-db.c123456.us-east-1.rds.amazonaws.com:3306/medical_cdss
+mysql+pymysql://admin:<your-password>@<rds-endpoint>:3306/medical_cdss
 ```
 
 ### Step 3: Set Environment Variable
 ```bash
 eb setenv \
-  DATABASE_URL="mysql+pymysql://admin:YourSecurePassword123@medical-cdss-db.c123456.us-east-1.rds.amazonaws.com:3306/medical_cdss"
+  DATABASE_URL="<your managed database connection string>"
 
 # Deploy
 eb deploy

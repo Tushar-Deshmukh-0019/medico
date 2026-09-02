@@ -353,7 +353,7 @@ Indexes (3):
 ```
 Database:  medical_cdss
 User:      cdss_user
-Password:  Password123!
+Password:  <your-password>
 Host:      localhost
 Port:      5432
 ```
@@ -595,4 +595,3 @@ Your Medical Decision Support System is ready to support clinical decision-makin
 **Completion Date:** August 2, 2026  
 **Version:** 1.0 Production Ready  
 **Quality:** Enterprise Grade  
-

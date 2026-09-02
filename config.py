@@ -23,6 +23,7 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     """Production configuration"""
+    SECRET_KEY = os.environ['SECRET_KEY']
     DEBUG = False
     TESTING = False
 

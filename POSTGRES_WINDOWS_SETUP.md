@@ -84,7 +84,7 @@ Copy-paste these commands into the psql prompt:
 CREATE DATABASE medical_cdss;
 
 -- Create a dedicated user
-CREATE USER cdss_user WITH PASSWORD 'Password123!';
+CREATE USER cdss_user WITH PASSWORD '<choose-a-strong-password>';
 
 -- Grant all privileges to the user
 GRANT ALL PRIVILEGES ON DATABASE medical_cdss TO cdss_user;
@@ -106,7 +106,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO c
 psql -U postgres -d medical_cdss -h localhost
 ```
 
-When prompted for password, enter: `admin123`
+When prompted, enter your configured PostgreSQL password.
 
 If successful, you'll see:
 ```
@@ -126,12 +126,12 @@ Exit with:
 
 **Windows Command Prompt:**
 ```cmd
-setx DATABASE_URL "postgresql://postgres:admin123@localhost:5432/medical_cdss"
+setx DATABASE_URL "<your PostgreSQL connection string>"
 ```
 
 **Windows PowerShell:**
 ```powershell
-[Environment]::SetEnvironmentVariable("DATABASE_URL", "postgresql://postgres:admin123@localhost:5432/medical_cdss", "User")
+[Environment]::SetEnvironmentVariable("DATABASE_URL", "<your PostgreSQL connection string>", "User")
 ```
 
 ⚠️ **After setting, restart Command Prompt or PowerShell**
@@ -141,7 +141,7 @@ setx DATABASE_URL "postgresql://postgres:admin123@localhost:5432/medical_cdss"
 Create file: `c:\medical_cdss\.env`
 
 ```
-DATABASE_URL=postgresql://postgres:admin123@localhost:5432/medical_cdss
+DATABASE_URL=<your PostgreSQL connection string>
 FLASK_ENV=development
 ```
 
@@ -150,7 +150,7 @@ FLASK_ENV=development
 Edit `c:\medical_cdss\database\connection.py` and change line 27:
 
 ```python
-database_url = 'postgresql://postgres:admin123@localhost:5432/medical_cdss'
+database_url = os.environ['DATABASE_URL']
 ```
 
 ---
@@ -356,7 +356,7 @@ tasklist | findstr postgres
    - Port: `5432` (default PostgreSQL port)
    - Database: `medical_cdss` (name you created)
    - Username: `cdss_user` (user you created)
-   - Password: `Password123!` (password you set)
+   - Password: your configured application password
 
 ---
 
@@ -385,7 +385,7 @@ postgresql://username:password@host:port/database
 
 **Local development (with password):**
 ```
-postgresql://cdss_user:Password123!@localhost:5432/medical_cdss
+postgresql://cdss_user:<your-password>@localhost:5432/medical_cdss
 ```
 
 **Local development (no password):**
@@ -409,8 +409,8 @@ postgresql://cdss_user:Pass%40word123@localhost:5432/medical_cdss
 | Port | 5432 |
 | Database | medical_cdss |
 | Username | postgres |
-| Password | admin123 |
-| Connection String | `postgresql://postgres:admin123@localhost:5432/medical_cdss` |
+| Password | `<your-password>` |
+| Connection String | `<your PostgreSQL connection string>` |
 
 ---
 

@@ -57,7 +57,7 @@ psql -U postgres
 CREATE DATABASE medical_cdss;
 
 # Create user
-CREATE USER cdss_user WITH PASSWORD 'YourPassword123!';
+CREATE USER cdss_user WITH PASSWORD '<choose-a-strong-password>';
 
 # Grant permissions
 GRANT ALL PRIVILEGES ON DATABASE medical_cdss TO cdss_user;
@@ -76,12 +76,12 @@ GRANT ALL PRIVILEGES ON DATABASE medical_cdss TO cdss_user;
 **Create .env file:**
 ```bash
 # Windows
-echo DATABASE_URL=postgresql://cdss_user:YourPassword123!@localhost:5432/medical_cdss > .env
+echo DATABASE_URL=<your PostgreSQL connection string> > .env
 ```
 
 **Or manually create file:** `c:\medical_cdss\.env`
 ```
-DATABASE_URL=postgresql://cdss_user:YourPassword123!@localhost:5432/medical_cdss
+DATABASE_URL=<your PostgreSQL connection string>
 FLASK_ENV=development
 FLASK_DEBUG=True
 ```
@@ -144,7 +144,7 @@ aws rds create-db-instance \
   --engine postgres \
   --allocated-storage 20 \
   --master-username cdss_user \
-  --master-user-password YourPassword123!
+  --master-user-password '<set-in-secret-manager>'
 ```
 
 **2. Get Connection Endpoint**
@@ -156,7 +156,7 @@ aws rds describe-db-instances \
 
 **3. Set Environment Variable**
 ```bash
-eb setenv DATABASE_URL=postgresql://cdss_user:YourPassword123!@endpoint.rds.amazonaws.com:5432/medical_cdss
+eb setenv DATABASE_URL='<your managed PostgreSQL connection string>'
 eb deploy
 ```
 
@@ -169,7 +169,7 @@ az postgres server create \
   --name medical-cdss-db \
   --location eastus \
   --admin-user cdss_user \
-  --admin-password YourPassword123! \
+  --admin-password '<set-in-secret-manager>' \
   --sku-name B_Gen5_1
 ```
 
@@ -192,7 +192,7 @@ az postgres server show \
 az webapp config appsettings set \
   --resource-group my-rg \
   --name your-app \
-  --settings DATABASE_URL=postgresql://cdss_user:YourPassword123!@medical-cdss-db.postgres.database.azure.com:5432/medical_cdss
+  --settings DATABASE_URL='<your managed PostgreSQL connection string>'
 ```
 
 ### Google Cloud + Cloud SQL
@@ -215,7 +215,7 @@ gcloud sql databases create medical_cdss \
 ```bash
 gcloud sql users create cdss_user \
   --instance=medical-cdss-db \
-  --password=YourPassword123!
+  --password='<set-in-secret-manager>'
 ```
 
 **4. Set CONNECTION_NAME**
@@ -362,7 +362,7 @@ LIMIT 10;
 ## 🔒 Security Best Practices
 
 ### Local Development
-- Use strong password: `YourPassword123!` (min 12 chars)
+- Use a unique strong password managed outside the repository
 - Don't use 'password' or '123456'
 - Store in .env (not in code)
 
@@ -396,7 +396,7 @@ echo %DATABASE_URL%
 
 # 4. Verify credentials
 # Username: cdss_user
-# Password: YourPassword123!
+# Password: set through the deployment secret manager
 # Database: medical_cdss
 # Host: localhost
 # Port: 5432
@@ -407,7 +407,7 @@ echo %DATABASE_URL%
 # Reset password
 psql -U postgres
 
-ALTER USER cdss_user WITH PASSWORD 'NewPassword123!';
+ALTER USER cdss_user WITH PASSWORD '<new-strong-password>';
 
 \q
 

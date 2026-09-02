@@ -12,7 +12,7 @@ Your app is configured to use PostgreSQL, but the database doesn't exist yet. Fo
 psql -U postgres -h localhost
 ```
 
-When prompted, enter your PostgreSQL superuser password: `admin123`
+When prompted, enter your PostgreSQL superuser password.
 
 ### Step 2: Create the Database
 
@@ -47,12 +47,12 @@ Host:       localhost
 Port:       5432
 Database:   medical_cdss
 Username:   postgres
-Password:   admin123
+Password:   <your-password>
 ```
 
 **Connection String:**
 ```
-postgresql://postgres:admin123@localhost:5432/medical_cdss
+postgresql://postgres:<your-password>@localhost:5432/medical_cdss
 ```
 
 This is set in:
